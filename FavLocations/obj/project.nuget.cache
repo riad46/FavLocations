@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ggTxqwxLmdxYyqemxCJ1O7KqNc/FJZOsmC4sB8tGIhWqi0Z0+fr2LLAYFg3qi9d1T7Q6/Dpn8nZKA6QLUlS4Dg==",
+  "dgSpecHash": "JUCY2efLxjRLqoWJwteHctAQ+mzJznll71YD/VsMc2wh6QjsgiI9XaFcPWuq+/qPz/gYRvgrnuAkRWYm6lkOsA==",
   "success": true,
-  "projectFilePath": "E:\\visual studio\\FavLocations\\FavLocations\\FavLocations.csproj",
+  "projectFilePath": "E:\\FavLocations\\FavLocations\\FavLocations.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }
