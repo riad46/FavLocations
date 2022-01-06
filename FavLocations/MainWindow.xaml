@@ -5,7 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FavLocations"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="360" ResizeMode="NoResize"  FontSize="16" >
+        Title="MainWindow" Height="400" Width="360"
+        FontSize="16" 
+        ResizeMode="NoResize" 
+        WindowStyle="None" WindowStartupLocation="Manual"
+        Top="0"  >
     <Grid>
 
         <Grid.ColumnDefinitions  >
@@ -16,17 +20,33 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
-        
+
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-       
-        <TabControl Grid.Row="1" Grid.Column="1" >
-            <TabItem Header="Shortcuts">
+        <Button x:Name="exit_btn" Content="x" Panel.ZIndex="20"
+                FontSize="20" FontWeight="Bold"         
+                VerticalContentAlignment="Top" HorizontalContentAlignment="Center"
+                Width="41" Height="35"
+                Background="White"
+                Grid.Column="1" Grid.Row="0" 
+                Grid.ColumnSpan="2" Grid.RowSpan="2"
+                HorizontalAlignment="Right" VerticalAlignment="Top" Click="exit_btn_Click"
+                BorderThickness="0"
+                />
+
+
+        <TabControl Grid.Row="1" Grid.Column="1" Background="Transparent">
+            <TabItem Header="Shortcuts" >
+                <StackPanel Background="Transparent">
+                    <Button Content="Button" Height="41" VerticalAlignment="Top" Background="Transparent"/>
+                    <Button Content="Button1" Height="41" VerticalAlignment="Top" Background="Transparent"/>
+                    <Button Content="Button2" Height="41" VerticalAlignment="Top" Background="Transparent"/>
+                </StackPanel>
+                
             </TabItem>
             <TabItem Header="Add">
                 <StackPanel>
                     <Grid>
-
                         <Grid.ColumnDefinitions  >
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="*"/>
@@ -36,8 +56,7 @@
                             <RowDefinition Height="*"/>
                             <RowDefinition Height="10"/>
                         </Grid.RowDefinitions>
-                        
-                    
+
                         <TextBox x:Name="pathBox" Text="Insert your path here" 
                             TextAlignment="Center" VerticalContentAlignment="Center" 
                             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
@@ -60,29 +79,102 @@
                             Margin="0,50,0,0"
                             HorizontalAlignment="Left" VerticalAlignment="Top" GotFocus="nameBox_GotFocus" LostFocus="nameBox_LostFocus"
                  />
-
                         <Button x:Name="addPathButton" Content="Add to list"                 
                             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                             Width="200" Height="30"
                             VerticalAlignment="Top"
                             Margin="0 95 0 0"
                 />
-
-
-
-                        
                     </Grid>
-
-                    
                 </StackPanel>
             </TabItem>
             <TabItem Header="Settings">
+                <StackPanel>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="auto"/>
+                            <ColumnDefinition Width="auto"/>
 
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+
+                            <RowDefinition Height="10"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="10"/>
+                        </Grid.RowDefinitions>
+                        <!-- First Line -->
+                        <CheckBox x:Name="showApp_CheckBox" Content="Hide the application as a Tab" 
+                                  Grid.Row="1" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  VerticalAlignment="Top"/>
+                        <!-- Second Line -->
+                        <CheckBox x:Name="darkmode_CheckBox" Content="Activate Dark Mode" 
+                                  Grid.Row="2" Grid.Column="1"
+                                  VerticalContentAlignment="Center"
+                                  VerticalAlignment="Top"
+                                  Margin="0 10 0 0"
+                                  />
+                        <!-- Third Line -->
+                        <GroupBox Header="Window Size"
+                                  Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="2">
+                            <StackPanel>
+                                <TextBlock  Text="hidden mode: " />
+                                <TextBlock  Text="Width: " 
+                                            Margin="100 0 0 -20 "
+                                    />
+                                <TextBox x:Name="hiddenWindowWidth"
+                                         FontFamily="Cascadia Code ExtraLight"
+                                         Width="50"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         />
+                                <TextBlock  Text="Heigth"
+                                            Margin="100 0 0 -20 "
+                                            />
+                                <TextBox x:Name="hiddenWindowHeigth"
+                                         FontFamily="Cascadia Code ExtraLight"
+                                         Width="50"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         />
+
+
+
+                                <TextBlock  Text="Shown mode:"/>
+                                <TextBlock  Text="Width: " 
+                                            Margin="100 0 0 -20 "
+                                    />
+                                <TextBox x:Name="shownWindowWidth"
+                                         FontFamily="Cascadia Code ExtraLight"
+                                         Width="50"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         />
+                                <TextBlock  Text="Heigth"
+                                            Margin="100 0 0 -20 "
+                                            />
+                                <TextBox x:Name="shownWindowHeigth"
+                                         FontFamily="Cascadia Code ExtraLight"
+                                         Width="50"
+                                         HorizontalAlignment="Right"
+                                         VerticalAlignment="Top"
+                                         />
+                            </StackPanel>
+
+
+                        </GroupBox>
+
+                    </Grid>
+                </StackPanel>
             </TabItem>
+
         </TabControl>
 
-        
-      
+
+
     </Grid>
 
 

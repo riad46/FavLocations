@@ -25,6 +25,8 @@ namespace FavLocations
         public MainWindow()
         {
             InitializeComponent();
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+            
         }
         private void pathBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -59,6 +61,11 @@ namespace FavLocations
                 nameBox.Text = "Name this Location";
                 returnToInitialStat_nameBox = true;
             }
+        }
+
+        private void exit_btn_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }
