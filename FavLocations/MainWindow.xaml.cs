@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace FavLocations
         public MainWindow()
         {
             InitializeComponent();
+            Properties.Settings.Default.Reset();
             FillShortcutsPage();
             ApplySettingsOnStartUp();
             CalculatePosition();
@@ -41,8 +43,10 @@ namespace FavLocations
             btn.Height = 41;
             btn.Background = new SolidColorBrush(Colors.Transparent);
             btn.Foreground = new SolidColorBrush(Colors.Black);
+            btn.Click += new RoutedEventHandler(shortcutButton_Click);
             shortcuts_panel.Children.Add(btn);  
         }
+
         private void CalculatePosition()
         {
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
@@ -175,7 +179,21 @@ namespace FavLocations
             (sender as TextBox).Foreground = Brushes.Black;
         }
         #endregion
-        
+      
+        #region Shortcuts Events
+        private void openApath(Object senderButton)
+        {
+            var pathsname = (senderButton as Button).Content as string;
+            var pathsIndex = namesList.IndexOf(pathsname);
+            var pathToOpen = pathsList[pathsIndex];
+            Process.Start("explorer.exe", @$"{pathToOpen}");
+        }
+        private void shortcutButton_Click(object sender, RoutedEventArgs e)
+        {
+            openApath(sender);        
+        }
+        #endregion
+
         #region Window Events
         private void exit_btn_Click(object sender, RoutedEventArgs e)
         {
