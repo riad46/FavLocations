@@ -128,7 +128,7 @@
                                   Grid.Row="2" Grid.Column="1"
                                   VerticalContentAlignment="Center"
                                   VerticalAlignment="Top"
-                                  Margin="0 10 0 0" Checked="darkmode_CheckBox_Checked"
+                                  Margin="0 10 0 0" 
                                   />
                             <!-- Third Line -->
                             <GroupBox Header="Window Size"
@@ -143,7 +143,7 @@
                                          FontFamily="Cascadia Code ExtraLight"
                                          Width="50"
                                          HorizontalAlignment="Right"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Top" LostFocus="hiddenWindowWidth_LostFocus" GotFocus="SizeWindows_GetFocus"
                                          />
                                     <TextBlock  Text="Heigth"
                                             Margin="100 0 0 -20 "
@@ -152,7 +152,7 @@
                                          FontFamily="Cascadia Code ExtraLight"
                                          Width="50"
                                          HorizontalAlignment="Right"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Top" LostFocus="hiddenWindowHeight_LostFocus" GotFocus="SizeWindows_GetFocus"
                                          />
 
 
@@ -165,7 +165,7 @@
                                          FontFamily="Cascadia Code ExtraLight"
                                          Width="50"
                                          HorizontalAlignment="Right"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Top" LostFocus="shownWindowWidth_LostFocus" GotFocus="SizeWindows_GetFocus"
                                          />
                                     <TextBlock  Text="Heigth"
                                             Margin="100 0 0 -20 "
@@ -174,7 +174,7 @@
                                          FontFamily="Cascadia Code ExtraLight"
                                          Width="50"
                                          HorizontalAlignment="Right"
-                                         VerticalAlignment="Top"
+                                         VerticalAlignment="Top" LostFocus="shownWindowHeight_LostFocus" GotFocus="SizeWindows_GetFocus"
                                          />
                                 </StackPanel>
 

@@ -50,17 +50,12 @@ namespace FavLocations
         //--------------------------------------------work on this Feature---------------------------
         private void TurnToDarkMode()
         {
-            if (Properties.Settings.Default.isWindowInDarkMode)
-            {
                 this.Background = Brushes.Black;
-                Foreground = Brushes.White;
-            }
-            else
-            {
-                this.Background = Brushes.White;
-                
-                Foreground = Brushes.Black;
-            }
+                Foreground = Brushes.White;        
+        }
+        private void TurnToLightMode()
+        {
+
         }
         //--------------------------------------------------------------------------------------------
         private void ApplySettingsOnStartUp()
@@ -71,6 +66,10 @@ namespace FavLocations
             if (hideApp_CheckBox.IsChecked == true)
             {
                 MinimizeWindow();
+            }
+            if(darkmode_CheckBox.IsChecked == true)
+            {
+                TurnToDarkMode();
             }
 
         }
@@ -138,10 +137,7 @@ namespace FavLocations
         {
             Close();
         }
-        private void darkmode_CheckBox_Checked(object sender, RoutedEventArgs e)
-        {
-           
-        }
+       
         private void applySettings_btn_Click(object sender, RoutedEventArgs e)
         {
             SaveSettings(Convert.ToSingle(hiddenWindowWidth.Text), Convert.ToSingle(hiddenWindowHeight.Text), Convert.ToSingle(shownWindowWidth.Text), Convert.ToSingle(shownWindowHeight.Text));
@@ -153,8 +149,16 @@ namespace FavLocations
             {
                 MaximizeWindow();
             }
+            if (darkmode_CheckBox.IsChecked == true)
+            {
+                TurnToDarkMode();
+            }
+            else
+            {
+                TurnToLightMode();
+            }
 
-           
+
 
         }  
         private void window_MouseEnter(object sender, MouseEventArgs e)
@@ -164,7 +168,6 @@ namespace FavLocations
                 MaximizeWindow();
             }
         }
-
         private void window_MouseLeave(object sender, MouseEventArgs e)
         {
             if (Properties.Settings.Default.isWindowHidden)
@@ -172,5 +175,46 @@ namespace FavLocations
                 MinimizeWindow();
             }
         }
+        private void hiddenWindowWidth_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float minWidth = 50;
+            if (Convert.ToSingle(hiddenWindowWidth.Text) < minWidth)
+            {
+                hiddenWindowWidth.Text = $"{minWidth}";
+                hiddenWindowWidth.Foreground = Brushes.Red;
+            }
+        }
+        private void hiddenWindowHeight_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float minHeight = 50;
+            if (Convert.ToSingle(hiddenWindowHeight.Text) < minHeight)
+            {
+                hiddenWindowHeight.Text = $"{minHeight}";
+                hiddenWindowHeight.Foreground = Brushes.Red;
+            }
+        }
+        private void shownWindowWidth_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float minWidth = 300;
+            if (Convert.ToSingle(shownWindowWidth.Text) < minWidth)
+            {
+                shownWindowWidth.Text = $"{minWidth}";
+                shownWindowWidth.Foreground = Brushes.Red;
+            }
+        }
+        private void shownWindowHeight_LostFocus(object sender, RoutedEventArgs e)
+        {
+            float minHeight = 320;
+            if (Convert.ToSingle(shownWindowHeight.Text) < minHeight)
+            {
+                shownWindowHeight.Text = $"{minHeight} ";
+                shownWindowHeight.Foreground = Brushes.Red;
+            }
+        }
+        private void SizeWindows_GetFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as TextBox).Foreground = Brushes.Black;
+        }
     }
+            
 }
