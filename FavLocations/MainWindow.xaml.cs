@@ -27,11 +27,10 @@ namespace FavLocations
         private List<string> pathsList = Properties.Settings.Default.pathsList == null? new() : Properties.Settings.Default.pathsList.Cast<string>().ToList() ;
         private List<string> namesList= Properties.Settings.Default.namesList == null ? new() : Properties.Settings.Default.namesList.Cast<string>().ToList();
 
-
+       
         public MainWindow()
         {
-            InitializeComponent();
-            Properties.Settings.Default.Reset();
+            InitializeComponent();        
             FillShortcutsPage();
             ApplySettingsOnStartUp();
             CalculatePosition();
