@@ -13,7 +13,7 @@
        Background="Transparent"
         WindowStartupLocation="Manual"
         Top="0" 
-        MouseEnter="window_MouseEnter" MouseLeave="window_MouseLeave" 
+        MouseEnter="window_MouseEnter" MouseLeave="window_MouseLeave" Closing="window_Closing" 
         
         >
     <Border Name="mainWindow"
@@ -95,7 +95,7 @@
                             Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2"
                             Width="200" Height="30"
                             VerticalAlignment="Top"
-                            Margin="0 95 0 0"
+                            Margin="0 95 0 0" Click="addPathButton_Click"
                 />
                         </Grid>
                     </StackPanel>

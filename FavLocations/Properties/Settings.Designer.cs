@@ -49,7 +49,7 @@ namespace FavLocations.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        [global::System.Configuration.DefaultSettingValueAttribute("320")]
         public float shownWindowWidth {
             get {
                 return ((float)(this["shownWindowWidth"]));
@@ -61,7 +61,7 @@ namespace FavLocations.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        [global::System.Configuration.DefaultSettingValueAttribute("360")]
         public float shownWindowHeight {
             get {
                 return ((float)(this["shownWindowHeight"]));
@@ -92,6 +92,28 @@ namespace FavLocations.Properties {
             }
             set {
                 this["isWindowInDarkMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection pathsList {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["pathsList"]));
+            }
+            set {
+                this["pathsList"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        public global::System.Collections.Specialized.StringCollection namesList {
+            get {
+                return ((global::System.Collections.Specialized.StringCollection)(this["namesList"]));
+            }
+            set {
+                this["namesList"] = value;
             }
         }
     }

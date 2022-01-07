@@ -9,16 +9,22 @@
       <Value Profile="(Default)">50</Value>
     </Setting>
     <Setting Name="shownWindowWidth" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">360</Value>
+      <Value Profile="(Default)">320</Value>
     </Setting>
     <Setting Name="shownWindowHeight" Type="System.Single" Scope="User">
-      <Value Profile="(Default)">400</Value>
+      <Value Profile="(Default)">360</Value>
     </Setting>
     <Setting Name="isWindowHidden" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="isWindowInDarkMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="pathsList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="namesList" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>
