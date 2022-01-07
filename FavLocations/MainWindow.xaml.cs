@@ -22,10 +22,84 @@ namespace FavLocations
     {
         private bool returnToInitialStat_pathBox = true;//use it to know wether to clear the PATH_box or not depending on the text in it
         private bool returnToInitialStat_nameBox =true;//use it to know wether to clear the NAME_box or not depending on the text in it
+        //used after changing the window's size
+        private void CalculatePosition()
+        {
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+        }
+        private void SaveSettings(float hiddenWidth,float hiddenHeigth ,float shownWidth,float shownHeigth)
+        {
+            Properties.Settings.Default.isWindowHidden = (bool)hideApp_CheckBox.IsChecked;
+            Properties.Settings.Default.isWindowInDarkMode = (bool)darkmode_CheckBox.IsChecked;
+
+            Properties.Settings.Default.hiddenWindowWidth=hiddenWidth;
+            Properties.Settings.Default.hiddenWindowHeight=hiddenHeigth;
+            Properties.Settings.Default.shownWindowWidth=shownWidth;
+            Properties.Settings.Default.shownWindowHeight = shownHeigth;
+            Properties.Settings.Default.Save();
+
+        }
+        private void RetreiveSavedSize()
+        {
+            hiddenWindowWidth.Text = Properties.Settings.Default.hiddenWindowWidth.ToString();
+            hiddenWindowHeight.Text = Properties.Settings.Default.hiddenWindowHeight.ToString();
+            shownWindowWidth.Text = Properties.Settings.Default.shownWindowWidth.ToString();
+            shownWindowHeight.Text = Properties.Settings.Default.shownWindowHeight.ToString();
+        }
+
+        //--------------------------------------------work on this Feature---------------------------
+        private void TurnToDarkMode()
+        {
+            if (Properties.Settings.Default.isWindowInDarkMode)
+            {
+                this.Background = Brushes.Black;
+                Foreground = Brushes.White;
+            }
+            else
+            {
+                this.Background = Brushes.White;
+                
+                Foreground = Brushes.Black;
+            }
+        }
+        //--------------------------------------------------------------------------------------------
+        private void ApplySettingsOnStartUp()
+        {
+            darkmode_CheckBox.IsChecked=Properties.Settings.Default.isWindowInDarkMode;
+            hideApp_CheckBox.IsChecked=Properties.Settings.Default.isWindowHidden;
+            RetreiveSavedSize();
+            if (hideApp_CheckBox.IsChecked == true)
+            {
+                MinimizeWindow();
+            }
+
+        }
+        //to make it as a Tab on Desktop
+        private void MinimizeWindow()
+        {
+            Width = Properties.Settings.Default.hiddenWindowWidth;
+            Height = Properties.Settings.Default.hiddenWindowHeight;
+            exit_btn.Visibility = Visibility.Collapsed;
+            tabs.Visibility = Visibility.Collapsed;
+            mainWindow.Background = Brushes.Red;
+            logo.Visibility = Visibility.Visible;
+            CalculatePosition();
+        }
+        private void MaximizeWindow()
+        {
+            Width = Properties.Settings.Default.shownWindowWidth;
+            Height = Properties.Settings.Default.shownWindowHeight;
+            exit_btn.Visibility = Visibility.Visible;
+            tabs.Visibility = Visibility.Visible;
+            mainWindow.Background = Brushes.White;
+            logo.Visibility = Visibility.Collapsed;
+            CalculatePosition();
+        }
         public MainWindow()
         {
             InitializeComponent();
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+            ApplySettingsOnStartUp();
+            CalculatePosition();
             
         }
         private void pathBox_GotFocus(object sender, RoutedEventArgs e)
@@ -44,7 +118,6 @@ namespace FavLocations
                 returnToInitialStat_pathBox = true;
             }            
         }
-
         private void nameBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (returnToInitialStat_nameBox)
@@ -53,7 +126,6 @@ namespace FavLocations
                 returnToInitialStat_nameBox = false;
             }
         }
-
         private void nameBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (nameBox.Text.Length == 0)
@@ -62,16 +134,43 @@ namespace FavLocations
                 returnToInitialStat_nameBox = true;
             }
         }
-
         private void exit_btn_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
-
         private void darkmode_CheckBox_Checked(object sender, RoutedEventArgs e)
         {
-            this.Background = Brushes.Black;
-            Foreground = new SolidColorBrush(Color.FromRgb(0, 0, 0));
+           
+        }
+        private void applySettings_btn_Click(object sender, RoutedEventArgs e)
+        {
+            SaveSettings(Convert.ToSingle(hiddenWindowWidth.Text), Convert.ToSingle(hiddenWindowHeight.Text), Convert.ToSingle(shownWindowWidth.Text), Convert.ToSingle(shownWindowHeight.Text));
+            if (hideApp_CheckBox.IsChecked==true)
+            {
+                MinimizeWindow();
+            }
+            else
+            {
+                MaximizeWindow();
+            }
+
+           
+
+        }  
+        private void window_MouseEnter(object sender, MouseEventArgs e)
+        {
+            if (Properties.Settings.Default.isWindowHidden)
+            {
+                MaximizeWindow();
+            }
+        }
+
+        private void window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            if (Properties.Settings.Default.isWindowHidden)
+            {
+                MinimizeWindow();
+            }
         }
     }
 }

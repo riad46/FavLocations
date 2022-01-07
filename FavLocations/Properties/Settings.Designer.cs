@@ -22,5 +22,77 @@ namespace FavLocations.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public float hiddenWindowWidth {
+            get {
+                return ((float)(this["hiddenWindowWidth"]));
+            }
+            set {
+                this["hiddenWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("50")]
+        public float hiddenWindowHeight {
+            get {
+                return ((float)(this["hiddenWindowHeight"]));
+            }
+            set {
+                this["hiddenWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        public float shownWindowWidth {
+            get {
+                return ((float)(this["shownWindowWidth"]));
+            }
+            set {
+                this["shownWindowWidth"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("400")]
+        public float shownWindowHeight {
+            get {
+                return ((float)(this["shownWindowHeight"]));
+            }
+            set {
+                this["shownWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isWindowHidden {
+            get {
+                return ((bool)(this["isWindowHidden"]));
+            }
+            set {
+                this["isWindowHidden"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool isWindowInDarkMode {
+            get {
+                return ((bool)(this["isWindowInDarkMode"]));
+            }
+            set {
+                this["isWindowInDarkMode"] = value;
+            }
+        }
     }
 }
