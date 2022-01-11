@@ -49,7 +49,7 @@ namespace FavLocations.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("320")]
+        [global::System.Configuration.DefaultSettingValueAttribute("300")]
         public float shownWindowWidth {
             get {
                 return ((float)(this["shownWindowWidth"]));
@@ -61,7 +61,7 @@ namespace FavLocations.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("360")]
+        [global::System.Configuration.DefaultSettingValueAttribute("320")]
         public float shownWindowHeight {
             get {
                 return ((float)(this["shownWindowHeight"]));

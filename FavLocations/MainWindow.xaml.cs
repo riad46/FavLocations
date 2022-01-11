@@ -34,7 +34,7 @@ namespace FavLocations
             FillShortcutsPage();
             ApplySettingsOnStartUp();            
             CalculatePosition();            
-            TurnToDarkMode();
+            
         }
         private void CalculatePosition()
         {
@@ -131,7 +131,7 @@ namespace FavLocations
         }
         private void TurnToLightMode()
         {
-            mainWindow.Background = new SolidColorBrush(Colors.White);
+            //mainWindow.Background = new SolidColorBrush(Colors.White);
         }
         private void CreateButton(string name)
         {
@@ -233,7 +233,8 @@ namespace FavLocations
 
         #region Settings page Events
         private void applySettings_btn_Click(object sender, RoutedEventArgs e)
-        {        
+        {
+            SaveSettings();
             if (hideApp_CheckBox.IsChecked==true)
             {
                 MinimizeWindow();
@@ -242,7 +243,17 @@ namespace FavLocations
             {
                 MaximizeWindow();
             }
-            SaveSettings();
+
+            if (darkmode_CheckBox.IsChecked == true)
+            {
+                TurnToDarkMode();
+            }
+            else
+            {
+                TurnToLightMode();
+            }
+
+           
         }
         private void hiddenWindowWidth_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -251,8 +262,9 @@ namespace FavLocations
             {
                 hiddenWindowWidth.Text = $"{minWidth}";
                 hiddenWindowWidth.Foreground = Brushes.Red;
+                MessageBox.Show(this, "Minimum Width for window in hidden mode is 50", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            MessageBox.Show(this, "Minimum Width for window in hidden mode is 50", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+            
         }
         private void hiddenWindowHeight_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -261,8 +273,9 @@ namespace FavLocations
             {
                 hiddenWindowHeight.Text = $"{minHeight}";
                 hiddenWindowHeight.Foreground = Brushes.Red;
+                MessageBox.Show(this, "Minimum Height for window in hidden mode is 50", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            MessageBox.Show(this, "Minimum Height for window in hidden mode is 50", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+          
         }
         private void shownWindowWidth_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -271,8 +284,9 @@ namespace FavLocations
             {
                 shownWindowWidth.Text = $"{minWidth}";
                 shownWindowWidth.Foreground = Brushes.Red;
+                MessageBox.Show(this, "Minimum Width for window in shown mode is 300", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            MessageBox.Show(this, "Minimum Width for window in shown mode is 300", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+           
         }
         private void shownWindowHeight_LostFocus(object sender, RoutedEventArgs e)
         {
@@ -281,8 +295,9 @@ namespace FavLocations
             {
                 shownWindowHeight.Text = $"{minHeight} ";
                 shownWindowHeight.Foreground = Brushes.Red;
+                MessageBox.Show(this, "Minimum height for window in shown mode is 320", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            MessageBox.Show(this, "Minimum height for window in shown mode is 320", "Wait!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
+           
         }
         private void SizeWindows_GetFocus(object sender, RoutedEventArgs e)
         {
@@ -337,6 +352,8 @@ namespace FavLocations
         private void AddWindowDisplayModeToSettings()
         {
             Properties.Settings.Default.isWindowHidden = (bool)hideApp_CheckBox.IsChecked;
+            Properties.Settings.Default.isWindowInDarkMode=(bool)darkmode_CheckBox.IsChecked;
+            Properties.Settings.Default.Save();
         }
         private void AddSizeToSettings(float hiddenWidth, float hiddenHeigth, float shownWidth, float shownHeigth)
         {
@@ -344,6 +361,7 @@ namespace FavLocations
             Properties.Settings.Default.hiddenWindowHeight = hiddenHeigth;
             Properties.Settings.Default.shownWindowWidth = shownWidth;
             Properties.Settings.Default.shownWindowHeight = shownHeigth;
+            Properties.Settings.Default.Save();
         }
         //shortcuts
         private void AddDataToSettings()
@@ -362,13 +380,14 @@ namespace FavLocations
 
             Properties.Settings.Default.pathsList = pathsCollection;
             Properties.Settings.Default.namesList = namesCollection;
+            Properties.Settings.Default.Save();
         }
         private void SaveSettings()
         {
             AddSizeToSettings(Convert.ToSingle(hiddenWindowWidth.Text), Convert.ToSingle(hiddenWindowHeight.Text), Convert.ToSingle(shownWindowWidth.Text), Convert.ToSingle(shownWindowHeight.Text));
             AddWindowDisplayModeToSettings();
-            AddDataToSettings();
-            Properties.Settings.Default.Save();
+            AddDataToSettings();           
+         
         }
         #endregion
         
@@ -391,6 +410,14 @@ namespace FavLocations
             if (hideApp_CheckBox.IsChecked == true)
             {
                 MinimizeWindow();
+            }
+            else
+            {
+                MaximizeWindow();
+            }
+            if(darkmode_CheckBox.IsChecked==true)
+            {
+                TurnToDarkMode();
             }
            FillDeleteComboBox();
             
