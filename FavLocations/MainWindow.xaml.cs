@@ -30,10 +30,108 @@ namespace FavLocations
        
         public MainWindow()
         {
-            InitializeComponent();        
+            InitializeComponent();  
             FillShortcutsPage();
-            ApplySettingsOnStartUp();
-            CalculatePosition();
+            ApplySettingsOnStartUp();            
+            CalculatePosition();            
+            TurnToDarkMode();
+        }
+        private void CalculatePosition()
+        {
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+        }
+        private void TurnElementsToDark()
+        {
+            // shortcuts tab
+            var childrensList = shortcuts_panel.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Foreground= new SolidColorBrush(Colors.White);                  
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+            }
+            //management tab
+            childrensList=managementTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Black);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+                //if (child.GetType() == new ComboBox().GetType())
+                //{
+                //    (child as ComboBox).Background = new SolidColorBrush(Colors.Transparent);
+                //    (child as ComboBox).Foreground = new SolidColorBrush(Colors.Blue);
+                //}
+            }
+            //settings tab
+             childrensList = settingsTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Black);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+                if (child.GetType() == new CheckBox().GetType())
+                {
+                    (child as CheckBox).Foreground = new SolidColorBrush(Colors.White);
+
+                }
+                if (child.GetType() == new GroupBox().GetType())
+                {
+                    (child as GroupBox).Foreground = Brushes.White;
+                }
+            }
+        }
+        private void TurnToDarkMode()
+        {
+            mainWindow.Background = new SolidColorBrush(Colors.Black);
+            TurnElementsToDark();
+        }
+        private void TurnToLightMode()
+        {
+            mainWindow.Background = new SolidColorBrush(Colors.White);
         }
         private void CreateButton(string name)
         {
@@ -42,31 +140,12 @@ namespace FavLocations
             btn.Height = 41;
             btn.Background = new SolidColorBrush(Colors.Transparent);
             btn.Foreground = new SolidColorBrush(Colors.Black);
-            btn.Click += new RoutedEventHandler(shortcutButton_Click);
+            btn.Click += new RoutedEventHandler(shortcutButton_Click);     
             shortcuts_panel.Children.Add(btn);  
         }
-        private void FillDeleteComboBox()
-        {
-            if (namesList != null)
-            {
-                delete_comboBox.ItemsSource = namesList;
-
-            }
-            else
-            {
-                delete_comboBox.ItemsSource = new List<string>();
-            }
-        }
-        private void ResetDeleteComboBox()
-        {
-            delete_comboBox.SelectedItem = null;
-            delete_comboBox.ItemsSource = null;
-        }
-        private void CalculatePosition()
-        {
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-        }
-       //used to save the path and name to lists before saving on close
+      
+     
+        //used to save the path and name to lists before saving on close
         private void addPathAndNameToList(string path,string name)
         {
             pathsList.Add(path);
@@ -74,7 +153,7 @@ namespace FavLocations
         }
         #region Controls Events
        
-        #region Management pages Events
+        #region Management page Events
          private void pathBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (returnToInitialStat_pathBox)
@@ -133,11 +212,11 @@ namespace FavLocations
             nameBox.Text = "";        
             ResetDeleteComboBox();  
             FillDeleteComboBox();
-            FillShortcutsPage();
-            
+            FillShortcutsPage(); 
         }
          private void deleteShortcutButton_Click(object sender, RoutedEventArgs e)
         {
+            if(delete_comboBox.SelectedItem==null) return;  
             string shortcutElement = delete_comboBox.SelectedItem.ToString();
             if (shortcutElement != null)
             {
@@ -223,6 +302,7 @@ namespace FavLocations
         {
             openApath(sender);        
         }
+
         #endregion
 
         #region Window Events
@@ -347,9 +427,27 @@ namespace FavLocations
                 CreateButton(item);
             }
         }
+        private void FillDeleteComboBox()
+        {
+            if (namesList != null)
+            {
+                delete_comboBox.ItemsSource = namesList;
+
+            }
+            else
+            {
+                delete_comboBox.ItemsSource = new List<string>();
+            }
+        }
+        private void ResetDeleteComboBox()
+        {
+            delete_comboBox.SelectedItem = null;
+            delete_comboBox.ItemsSource = null;
+        }
+
         #endregion
 
-     
+       
     }
 
 }

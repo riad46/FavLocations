@@ -78,29 +78,20 @@
                 Grid.Row="1"
                 Grid.Column="1"
                 Background="Transparent">
-                <TabItem Header="Shortcuts">
+                <TabItem Header="Shortcuts" >
                     <StackPanel x:Name="shortcuts_panel" Background="Transparent">
                         <Button
                             Height="41"
                             VerticalAlignment="Top"
                             Background="Transparent"
                             Content="Button" />
-                        <Button
-                            Height="41"
-                            VerticalAlignment="Top"
-                            Background="Transparent"
-                            Content="Button1" />
-                        <Button
-                            Height="41"
-                            VerticalAlignment="Top"
-                            Background="Transparent"
-                            Content="Button2" />
+                   
                     </StackPanel>
 
                 </TabItem>
                 <TabItem Header="Manage">
                     <StackPanel Background="Transparent">
-                        <Grid>
+                        <Grid  Name="managementTab">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
@@ -158,7 +149,7 @@
                                 VerticalAlignment="Top"
                                 Click="addPathButton_Click"
                                 Content="Add to list" />
-                           
+
                             <Border
                                 Grid.Row="2"
                                 Grid.ColumnSpan="2"
@@ -167,7 +158,6 @@
                                 BorderBrush="Black"
                                 BorderThickness="1.5" 
                                 />
-
 
                             <ComboBox 
                                 Name="delete_comboBox"
@@ -195,7 +185,7 @@
                 </TabItem>
                 <TabItem Header="Settings">
                     <StackPanel Background="Transparent">
-                        <Grid>
+                        <Grid  Name="settingsTab">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="10" />
                                 <ColumnDefinition Width="auto" />
