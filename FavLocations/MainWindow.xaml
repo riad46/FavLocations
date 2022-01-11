@@ -79,14 +79,17 @@
                 Grid.Column="1"
                 Background="Transparent">
                 <TabItem Header="Shortcuts" >
-                    <StackPanel x:Name="shortcuts_panel" Background="Transparent">
-                        <Button
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel x:Name="shortcuts_panel" Background="Transparent">
+                            <Button
                             Height="41"
                             VerticalAlignment="Top"
                             Background="Transparent"
                             Content="Button" />
-                   
-                    </StackPanel>
+
+                        </StackPanel>
+                    </ScrollViewer>
+                    
 
                 </TabItem>
                 <TabItem Header="Manage">
@@ -176,9 +179,26 @@
                                 Grid.ColumnSpan="2"
                                 Width="200"
                                 Height="30"
-                                Margin="0,50,0,0"
+                                Margin="0,45,0,0"
                                 VerticalAlignment="Top"
-                                Content="Delete Selected shortcut" Click="deleteShortcutButton_Click" />
+                                Content="Delete Selected shortcut" 
+                                Click="deleteShortcutButton_Click" />
+
+                            <Button
+                                x:Name="deleteAllShortcutsButton"
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="2"
+                                Width="200"
+                                Height="30"
+                                Margin="0,80,0,0"
+                                Background="Red"
+                                Foreground="Yellow"
+                                FontWeight="Bold"
+                                VerticalAlignment="Top"
+                                Content="Delete All Shortcuts" Click="deleteAllShortcutsButton_Click"
+                                 />
+
 
                         </Grid>
                     </StackPanel>
@@ -235,7 +255,8 @@
                                         VerticalAlignment="Top"
                                         FontFamily="Cascadia Code ExtraLight"
                                         GotFocus="SizeWindows_GetFocus"
-                                        LostFocus="hiddenWindowWidth_LostFocus" />
+                                        LostFocus="hiddenWindowWidth_LostFocus" 
+                                        PreviewTextInput="PreviewTextInput" />
                                     <TextBlock Margin="100,0,0,-20" Text="Heigth" />
                                     <TextBox
                                         x:Name="hiddenWindowHeight"
@@ -244,7 +265,8 @@
                                         VerticalAlignment="Top"
                                         FontFamily="Cascadia Code ExtraLight"
                                         GotFocus="SizeWindows_GetFocus"
-                                        LostFocus="hiddenWindowHeight_LostFocus" />
+                                        LostFocus="hiddenWindowHeight_LostFocus" 
+                                        PreviewTextInput="PreviewTextInput" />
 
                                     <TextBlock Text="Shown mode:" />
                                     <TextBlock Margin="100,0,0,-20" Text="Width: " />
@@ -255,7 +277,8 @@
                                         VerticalAlignment="Top"
                                         FontFamily="Cascadia Code ExtraLight"
                                         GotFocus="SizeWindows_GetFocus"
-                                        LostFocus="shownWindowWidth_LostFocus" />
+                                        LostFocus="shownWindowWidth_LostFocus" 
+                                        PreviewTextInput="PreviewTextInput"/>
                                     <TextBlock Margin="100,0,0,-20" Text="Heigth" />
                                     <TextBox
                                         x:Name="shownWindowHeight"
@@ -264,7 +287,8 @@
                                         VerticalAlignment="Top"
                                         FontFamily="Cascadia Code ExtraLight"
                                         GotFocus="SizeWindows_GetFocus"
-                                        LostFocus="shownWindowHeight_LostFocus" />
+                                        LostFocus="shownWindowHeight_LostFocus" 
+                                        PreviewTextInput="PreviewTextInput" />
                                 </StackPanel>
 
                             </GroupBox>

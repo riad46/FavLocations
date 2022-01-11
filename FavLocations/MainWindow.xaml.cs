@@ -4,6 +4,7 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -33,118 +34,10 @@ namespace FavLocations
             InitializeComponent();  
             FillShortcutsPage();
             ApplySettingsOnStartUp();            
-            CalculatePosition();            
-            
-        }
-        private void CalculatePosition()
-        {
-            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
-        }
-        private void TurnElementsToDark()
-        {
-            // shortcuts tab
-            var childrensList = shortcuts_panel.Children;
-            foreach (var child in childrensList)
-            {
-                if (child.GetType() == new Button().GetType())
-                {
-                    (child as Button).Foreground= new SolidColorBrush(Colors.White);                  
-                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
-
-                }
-            }
-            //management tab
-            childrensList=managementTab.Children;
-            foreach (var child in childrensList)
-            {
-                if (child.GetType() == new TextBox().GetType())
-                {
-                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
-                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
-                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new TextBlock().GetType())
-                {
-
-                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new Button().GetType())
-                {
-                    (child as Button).Background = new SolidColorBrush(Colors.Black);
-                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
-                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new Border().GetType())
-                {
-                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
-                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
-
-                }
-                //if (child.GetType() == new ComboBox().GetType())
-                //{
-                //    (child as ComboBox).Background = new SolidColorBrush(Colors.Transparent);
-                //    (child as ComboBox).Foreground = new SolidColorBrush(Colors.Blue);
-                //}
-            }
-            //settings tab
-             childrensList = settingsTab.Children;
-            foreach (var child in childrensList)
-            {
-                if (child.GetType() == new TextBox().GetType())
-                {
-                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
-                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
-                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new TextBlock().GetType())
-                {
-
-                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new Button().GetType())
-                {
-                    (child as Button).Background = new SolidColorBrush(Colors.Black);
-                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
-                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
-                }
-                if (child.GetType() == new Border().GetType())
-                {
-                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
-                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
-
-                }
-                if (child.GetType() == new CheckBox().GetType())
-                {
-                    (child as CheckBox).Foreground = new SolidColorBrush(Colors.White);
-
-                }
-                if (child.GetType() == new GroupBox().GetType())
-                {
-                    (child as GroupBox).Foreground = Brushes.White;
-                }
-            }
-        }
-        private void TurnToDarkMode()
-        {
-            mainWindow.Background = new SolidColorBrush(Colors.Black);
-            TurnElementsToDark();
-        }
-        private void TurnToLightMode()
-        {
-            //mainWindow.Background = new SolidColorBrush(Colors.White);
-        }
-        private void CreateButton(string name)
-        {
-            Button btn = new();
-            btn.Content = name;
-            btn.Height = 41;
-            btn.Background = new SolidColorBrush(Colors.Transparent);
-            btn.Foreground = new SolidColorBrush(Colors.Black);
-            btn.Click += new RoutedEventHandler(shortcutButton_Click);     
-            shortcuts_panel.Children.Add(btn);  
+            CalculatePosition();                  
         }
       
-     
+       
         //used to save the path and name to lists before saving on close
         private void addPathAndNameToList(string path,string name)
         {
@@ -225,6 +118,17 @@ namespace FavLocations
                 pathsList.RemoveAt(elementIdex);
                 ResetDeleteComboBox();
                 FillDeleteComboBox();
+                FillShortcutsPage();
+            }
+        }
+        private void deleteAllShortcutsButton_Click(object sender, RoutedEventArgs e)
+        {
+            var messagBoxResult = MessageBox.Show("Do you really want to delete all the shortcuts ! \n this action cannot be reverted", "Watch out", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (messagBoxResult == MessageBoxResult.Yes)
+            {
+                namesList.Clear();
+                pathsList.Clear();
+                SaveSettings();
                 FillShortcutsPage();
             }
         }
@@ -330,6 +234,15 @@ namespace FavLocations
             if (Properties.Settings.Default.isWindowHidden)
             {
                 MaximizeWindow();
+                if(darkmode_CheckBox.IsChecked == true)
+                {
+                    TurnToDarkMode();
+                }
+                else
+                {
+                    TurnToLightMode();
+                }
+                
             }
         }
         private void window_MouseLeave(object sender, MouseEventArgs e)
@@ -410,6 +323,7 @@ namespace FavLocations
             if (hideApp_CheckBox.IsChecked == true)
             {
                 MinimizeWindow();
+               
             }
             else
             {
@@ -428,7 +342,15 @@ namespace FavLocations
             Height = Properties.Settings.Default.hiddenWindowHeight;
             exit_btn.Visibility = Visibility.Collapsed;
             tabs.Visibility = Visibility.Collapsed;
-            mainWindow.Background = Brushes.Red;
+            if (darkmode_CheckBox.IsChecked == true)
+            {
+                mainWindow.Background = Brushes.Black;
+            }
+            else
+            {
+                mainWindow.Background = Brushes.Red;
+            }
+            
             logo.Visibility = Visibility.Visible;
             CalculatePosition();
         }
@@ -472,9 +394,210 @@ namespace FavLocations
             delete_comboBox.ItemsSource = null;
         }
 
+
         #endregion
 
-       
+        #region General purpose functions
+        private void PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
+        }
+        private void CalculatePosition()
+        {
+            this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
+        }
+        private void TurnElementsToLight()
+        {
+            // shortcuts tab
+            var childrensList = shortcuts_panel.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Foreground = new SolidColorBrush(Colors.Black);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Black);
+
+                }
+            }
+            //management tab
+            childrensList = managementTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Transparent);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Transparent);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Black);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Black);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Black);
+
+                }
+                //if (child.GetType() == new ComboBox().GetType())
+                //{
+                //    (child as ComboBox).Background = new SolidColorBrush(Colors.Transparent);
+                //    (child as ComboBox).Foreground = new SolidColorBrush(Colors.Blue);
+                //}
+            }
+            //settings tab
+            childrensList = settingsTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Transparent);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Transparent);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Black);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.Black);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Black);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Black);
+
+                }
+                if (child.GetType() == new CheckBox().GetType())
+                {
+                    (child as CheckBox).Foreground = new SolidColorBrush(Colors.Black);
+
+                }
+                if (child.GetType() == new GroupBox().GetType())
+                {
+                    (child as GroupBox).Foreground = Brushes.Black;
+                }
+            }
+        }
+        private void TurnElementsToDark()
+        {
+            // shortcuts tab
+            var childrensList = shortcuts_panel.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+            }
+            //management tab
+            childrensList = managementTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Black);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+                //if (child.GetType() == new ComboBox().GetType())
+                //{
+                //    (child as ComboBox).Background = new SolidColorBrush(Colors.Transparent);
+                //    (child as ComboBox).Foreground = new SolidColorBrush(Colors.Blue);
+                //}
+            }
+            //settings tab
+            childrensList = settingsTab.Children;
+            foreach (var child in childrensList)
+            {
+                if (child.GetType() == new TextBox().GetType())
+                {
+                    (child as TextBox).Background = new SolidColorBrush(Colors.Black);
+                    (child as TextBox).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as TextBox).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new TextBlock().GetType())
+                {
+
+                    (child as TextBlock).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Button().GetType())
+                {
+                    (child as Button).Background = new SolidColorBrush(Colors.Black);
+                    (child as Button).BorderBrush = new SolidColorBrush(Colors.Ivory);
+                    (child as Button).Foreground = new SolidColorBrush(Colors.White);
+                }
+                if (child.GetType() == new Border().GetType())
+                {
+                    (child as Border).Background = new SolidColorBrush(Colors.Ivory);
+                    (child as Border).BorderBrush = new SolidColorBrush(Colors.Ivory);
+
+                }
+                if (child.GetType() == new CheckBox().GetType())
+                {
+                    (child as CheckBox).Foreground = new SolidColorBrush(Colors.White);
+
+                }
+                if (child.GetType() == new GroupBox().GetType())
+                {
+                    (child as GroupBox).Foreground = Brushes.White;
+                }
+            }
+        }
+        private void TurnToDarkMode()
+        {
+            mainWindow.Background = new SolidColorBrush(Colors.Black);
+            TurnElementsToDark();
+        }
+        private void TurnToLightMode()
+        {
+            mainWindow.Background = new SolidColorBrush(Colors.White);
+            TurnElementsToLight();
+        }
+        private void CreateButton(string name)
+        {
+            Button btn = new();
+            btn.Content = name;
+            btn.Height = 41;
+            btn.Margin = new Thickness(0, 0, 0, 3);
+            btn.Background = new SolidColorBrush(Colors.Transparent);
+            btn.Foreground = new SolidColorBrush(Colors.Black);
+            btn.Click += new RoutedEventHandler(shortcutButton_Click);
+            shortcuts_panel.Children.Add(btn);
+        }
+        #endregion
+
+      
     }
 
 }
