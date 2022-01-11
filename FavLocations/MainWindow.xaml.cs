@@ -45,7 +45,23 @@ namespace FavLocations
             btn.Click += new RoutedEventHandler(shortcutButton_Click);
             shortcuts_panel.Children.Add(btn);  
         }
+        private void FillDeleteComboBox()
+        {
+            if (namesList != null)
+            {
+                delete_comboBox.ItemsSource = namesList;
 
+            }
+            else
+            {
+                delete_comboBox.ItemsSource = new List<string>();
+            }
+        }
+        private void ResetDeleteComboBox()
+        {
+            delete_comboBox.SelectedItem = null;
+            delete_comboBox.ItemsSource = null;
+        }
         private void CalculatePosition()
         {
             this.Left = SystemParameters.PrimaryScreenWidth - this.Width;
@@ -58,7 +74,7 @@ namespace FavLocations
         }
         #region Controls Events
        
-        #region Add path pages Events
+        #region Management pages Events
          private void pathBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (returnToInitialStat_pathBox)
@@ -107,19 +123,35 @@ namespace FavLocations
         {
             string shortcutElementPath = $"{pathBox.Text}";
             string shortcutElementName = $"{nameBox.Text}";
-            if(shortcutElementPath.Length == 0 || shortcutElementName.Length == 0)
+            if(shortcutElementPath.Length == 0 || shortcutElementPath== "Insert your path here" || shortcutElementName.Length == 0 || shortcutElementName== "Name this Location")
             {
                 MessageBox.Show(this, "Please Fill Both Boxes", "HEY!!!", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
             addPathAndNameToList(shortcutElementPath, shortcutElementName);
             pathBox.Text = "";
-            nameBox.Text = "";
-
+            nameBox.Text = "";        
+            ResetDeleteComboBox();  
+            FillDeleteComboBox();
             FillShortcutsPage();
+            
         }
+         private void deleteShortcutButton_Click(object sender, RoutedEventArgs e)
+        {
+            string shortcutElement = delete_comboBox.SelectedItem.ToString();
+            if (shortcutElement != null)
+            {
+                var elementIdex = namesList.IndexOf(shortcutElement);
+                namesList.Remove(shortcutElement);
+                pathsList.RemoveAt(elementIdex);
+                ResetDeleteComboBox();
+                FillDeleteComboBox();
+                FillShortcutsPage();
+            }
+        }
+
         #endregion
-       
+
         #region Settings page Events
         private void applySettings_btn_Click(object sender, RoutedEventArgs e)
         {        
@@ -280,6 +312,8 @@ namespace FavLocations
             {
                 MinimizeWindow();
             }
+           FillDeleteComboBox();
+            
         }
         private void MinimizeWindow()
         {
@@ -315,6 +349,7 @@ namespace FavLocations
         }
         #endregion
 
+     
     }
 
 }
