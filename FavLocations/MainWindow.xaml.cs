@@ -28,6 +28,7 @@ namespace FavLocations
         private List<string> pathsList = Properties.Settings.Default.pathsList == null? new() : Properties.Settings.Default.pathsList.Cast<string>().ToList() ;
         private List<string> namesList= Properties.Settings.Default.namesList == null ? new() : Properties.Settings.Default.namesList.Cast<string>().ToList();
 
+        private bool whitemode = true; //checks whether the application is currently in whitemode or dark mode
        
         public MainWindow()
         {
@@ -52,7 +53,15 @@ namespace FavLocations
             if (returnToInitialStat_pathBox)
             {
                 pathBox.Text = "";
-                pathBox.Foreground =Brushes.Black;
+                if (whitemode)
+                {
+                    pathBox.Foreground = Brushes.Black;
+                }
+                else
+                {
+                    pathBox.Foreground = Brushes.White;
+                }
+
                 if (nameBox.Text == "Name this Location Here")
                 {
                     nameBox.Text = "";
@@ -78,7 +87,14 @@ namespace FavLocations
                     pathBox.Text = "";
                 }
                 nameBox.Text = "";
-                nameBox.Foreground =Brushes.Black;
+                if (whitemode)
+                {
+                    nameBox.Foreground = Brushes.Black;
+                }
+                else
+                {
+                    nameBox.Foreground = Brushes.White;
+                }
                 returnToInitialStat_nameBox = false;
             }
         }
@@ -576,11 +592,13 @@ namespace FavLocations
         }
         private void TurnToDarkMode()
         {
+            whitemode = false;
             mainWindow.Background = new SolidColorBrush(Colors.Black);
             TurnElementsToDark();
         }
         private void TurnToLightMode()
         {
+            whitemode = true;
             mainWindow.Background = new SolidColorBrush(Colors.White);
             TurnElementsToLight();
         }
